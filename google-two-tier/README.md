@@ -1,6 +1,6 @@
 # Basic Two-Tier Architecture in Google Cloud
 
-This provides a template for running a simple two-tier architecture on Google Cloud.
+A simple two-tier architecture on Google Cloud.
 The premise is that you have stateless app servers running behind
 a load balancer serving traffic.
 

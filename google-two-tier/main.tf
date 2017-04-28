@@ -9,10 +9,10 @@ provider "google" {
 resource "google_compute_http_health_check" "default" {
   name                = "tf-www-basic-check"
   request_path        = "/"
-  check_interval_sec  = 1
+  check_interval_sec  = 60
   healthy_threshold   = 1
   unhealthy_threshold = 10
-  timeout_sec         = 1
+  timeout_sec         = 10
 }
 
 resource "google_compute_target_pool" "default" {
