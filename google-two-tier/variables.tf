@@ -7,12 +7,13 @@ variable "region_zone" {
 }
 
 variable "project_name" {
-  description = "The ID of the Google Cloud project"
+  description = "Test Project"
+  default = "decent-rig-165113"
 }
 
 variable "credentials_file_path" {
   description = "Path to the JSON file used to describe your account credentials"
-  default     = "~/.gcloud/Terraform.json"
+  default     = "~/.gcloud/testproject.json"
 }
 
 variable "public_key_path" {
