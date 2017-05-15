@@ -36,7 +36,7 @@ resource "google_compute_instance" "www" {
   tags         = ["www-node"]
 
   disk {
-    image = "ubuntu-os-cloud/ubuntu-1404-trusty-v20160602"
+    image = "centos-7-v20170426"
   }
 
   network_interface {

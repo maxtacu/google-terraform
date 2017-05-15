@@ -1,13 +1,13 @@
 variable "region" {
-  default = "us-central1"
+  default = "europe-west1"
 }
 
 variable "region_zone" {
-  default = "us-central1-f"
+  default = "europe-west1-b"
 }
 
 variable "project_name" {
-  description = "Test Project"
+  description = "Project ID"
   default = "decent-rig-165113"
 }
 
