@@ -36,7 +36,7 @@ resource "google_compute_instance" "www" {
   tags         = ["www-node"]
 
   disk {
-    image = "centos-7-v20170426"
+    image = "centos-7/centos-7-v20170426"
   }
 
   network_interface {
