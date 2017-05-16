@@ -1,0 +1,13 @@
+---
+
+- hosts: web
+  become: yes
+  roles:
+#  - apache
+#  - php
+  - wordpress-apache
+#  vars_files:
+#    - darthwade.wordpress-apache/vars/main.yml
+
+# - include: dbserver.yml
+

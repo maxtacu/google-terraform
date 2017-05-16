@@ -28,69 +28,71 @@ resource "google_compute_forwarding_rule" "default" {
 }
 
 resource "google_compute_instance" "www" {
-  count = 3
+  count = 1
 
-  name         = "tf-www-${count.index}"
+  name = "tf-www-${count.index}"
   machine_type = "f1-micro"
-  zone         = "${var.region_zone}"
-  tags         = ["www-node"]
+  zone = "${var.region_zone}"
+  tags = ["www-node"]
 
   disk {
-    image = "centos-7/centos-7-v20170426"
+    image = "centos-7"
   }
 
   network_interface {
     network = "default"
 
-    access_config {
-      # Ephemeral
-    }
+        access_config {
+          # Ephemeral
+        }
   }
 
   metadata {
-    ssh-keys = "root:${file("${var.public_key_path}")}"
+    ssh-keys = "${var.ssh_user}:${file("${var.public_key_path}")}"
   }
 
-  provisioner "file" {
-    source      = "${var.install_script_src_path}"
-    destination = "${var.install_script_dest_path}"
-
-    connection {
-      type        = "ssh"
-      user        = "root"
-      private_key = "${file("${var.private_key_path}")}"
-      agent       = false
-    }
-  }
-
-  provisioner "remote-exec" {
-    connection {
-      type        = "ssh"
-      user        = "root"
-      private_key = "${file("${var.private_key_path}")}"
-      agent       = false
-    }
-
-    inline = [
-      "chmod +x ${var.install_script_dest_path}",
-      "sudo ${var.install_script_dest_path} ${count.index}",
-    ]
-  }
-
-  service_account {
-    scopes = ["https://www.googleapis.com/auth/compute.readonly"]
-  }
+//  provisioner "file" {
+//    source = "${var.install_script_src_path}"
+//    destination = "${var.install_script_dest_path}"
+//
+//    connection {
+//      type = "ssh"
+//      user = "mtacu"
+//      private_key = "${file("${var.private_key_path}")}"
+//      agent = false
+//    }
+//  }
+//
+//
+//    provisioner "remote-exec" {
+//      connection {
+//        type        = "ssh"
+//        user        = "mtacu"
+//        private_key = "${file("${var.private_key_path}")}"
+//        agent       = false
+//      }
+//
+//      inline = [
+//        "chmod +x ${var.install_script_dest_path}",
+//        "sudo ${var.install_script_dest_path} ${count.index}",
+//      ]
+//    }
 }
 
-resource "google_compute_firewall" "default" {
-  name    = "tf-www-firewall"
-  network = "default"
+  resource "google_compute_firewall" "default" {
+    name = "tf-www-firewall"
+    network = "default"
 
-  allow {
-    protocol = "tcp"
-    ports    = ["80"]
+    allow {
+      protocol = "tcp"
+      ports = ["80"]
+    }
+
+    allow {
+      protocol = "tcp"
+      ports = ["22"]
+    }
+
+    source_ranges = ["195.22.241.18/32"]
+    target_tags = ["www-node"]
   }
-
-  source_ranges = ["0.0.0.0/0"]
-  target_tags   = ["www-node"]
-}

@@ -35,3 +35,8 @@ variable "install_script_dest_path" {
   description = "Path to put the install script on each destination resource"
   default     = "/tmp/install.sh"
 }
+
+variable "ssh_user" {
+  description = "SSH Username"
+  default = "mtacu"
+}

@@ -1,0 +1,6 @@
+---
+
+- hosts: dbserver
+  sudo: yes
+  roles:
+  - geerlingguy.mysql
