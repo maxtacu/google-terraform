@@ -9,4 +9,4 @@ vagrant_*
 *.tfstate
 *.tfstate.backup
 test.sh
-
+.galaxy_install_info
