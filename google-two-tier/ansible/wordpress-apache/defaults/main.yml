@@ -1,0 +1,4 @@
+---
+wp_apache_hostname: 'localhost'
+wp_apache_alias: '127.0.0.1'
+wp_apache_admin_email: 'admin@example.com'

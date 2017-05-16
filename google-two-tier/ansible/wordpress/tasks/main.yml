@@ -10,7 +10,7 @@
   unarchive: src=/tmp/wordpress-{{wp_version}}.tar.gz dest=/tmp copy=no
 
 - name: Wordpresss | Move extracted directory to {{wp_install_dir}}
-  command: mv -v /tmp/wordpress/* {{wp_install_dir}} creates={{wp_install_dir}}
+  shell: mv /tmp/wordpress/* {{wp_install_dir}} #creates={{wp_install_dir}}
 
 - name: Wordpresss | Remove wordpress-{{wp_version}}.tar.gz
   file: path=/tmp/wordpress-{{wp_version}}.tar.gz state=absent
