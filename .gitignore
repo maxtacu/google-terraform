@@ -1,5 +1,4 @@
 .*
-*~
 !.git*
 !.travis.yml
 vagrant_*
@@ -10,3 +9,4 @@ vagrant_*
 *.tfstate
 *.tfstate.backup
 test.sh
+
