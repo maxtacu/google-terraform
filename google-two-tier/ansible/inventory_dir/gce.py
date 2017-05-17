@@ -17,10 +17,10 @@
 # along with Ansible.  If not, see <http://www.gnu.org/licenses/>.
 
 '''
-GCE external inventory script
+GCE external inventory_dir script
 =================================
 
-Generates inventory that Ansible can understand by making API requests
+Generates inventory_dir that Ansible can understand by making API requests
 Google Compute Engine via the libcloud library.  Full install/configuration
 instructions for the gce* modules can be found in the comments of
 ansible/test/gce_tests.py.
@@ -66,8 +66,8 @@ Examples:
   Execute uname on all instances in the us-central1-a zone
   $ ansible -i gce.py us-central1-a -m shell -a "/bin/uname -a"
 
-  Use the GCE inventory script to print out instance specific information
-  $ contrib/inventory/gce.py --host my_instance
+  Use the GCE inventory_dir script to print out instance specific information
+  $ contrib/inventory_dir/gce.py --host my_instance
 
 Author: Eric Johnson <erjohnso@google.com>
 Contributors: Matt Hite <mhite@hotmail.com>, Tom Melendez <supertom@google.com>
@@ -108,7 +108,7 @@ try:
     from libcloud.compute.providers import get_driver
     _ = Provider.GCE
 except:
-    sys.exit("GCE inventory script requires libcloud >= 0.13")
+    sys.exit("GCE inventory_dir script requires libcloud >= 0.13")
 
 
 class CloudInventoryCache(object):
@@ -159,7 +159,7 @@ class GceInventory(object):
     def __init__(self):
         # Cache object
         self.cache = None
-        # dictionary containing inventory read from disk
+        # dictionary containing inventory_dir read from disk
         self.inventory = {}
 
         # Read settings and parse CLI arguments
@@ -226,8 +226,8 @@ class GceInventory(object):
         })
         if 'gce' not in config.sections():
             config.add_section('gce')
-        if 'inventory' not in config.sections():
-            config.add_section('inventory')
+        if 'inventory_dir' not in config.sections():
+            config.add_section('inventory_dir')
         if 'cache' not in config.sections():
             config.add_section('cache')
 
@@ -256,9 +256,9 @@ class GceInventory(object):
         return config
 
     def get_inventory_options(self):
-        """Determine inventory options. Environment variables always
+        """Determine inventory_dir options. Environment variables always
         take precedence over configuration files."""
-        ip_type = self.config.get('inventory', 'inventory_ip_type')
+        ip_type = self.config.get('inventory_dir', 'inventory_ip_type')
         # If the appropriate environment variables are set, they override
         # other configuration
         ip_type = os.environ.get('INVENTORY_IP_TYPE', ip_type)
@@ -380,14 +380,14 @@ class GceInventory(object):
         }
 
     def load_inventory_from_cache(self):
-        ''' Loads inventory from JSON on disk. '''
+        ''' Loads inventory_dir from JSON on disk. '''
 
         try:
             self.inventory = self.cache.get_all_data_from_cache()
             hosts = self.inventory['_meta']['hostvars']
         except Exception as e:
             print(
-                "Invalid inventory file %s.  Please rebuild with -refresh-cache option."
+                "Invalid inventory_dir file %s.  Please rebuild with -refresh-cache option."
                 % (self.cache.cache_path_cache))
             raise
 
