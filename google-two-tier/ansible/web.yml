@@ -1,15 +1,12 @@
 ---
 
-- hosts: web
+- hosts: tag_webserver
   become: yes
   roles:
   - apache
   - php
   - wordpress-apache
-#  vars_files:
-#    - darthwade.wordpress-apache/vars/main.yml
   tasks:
-
   - name: SELINUX python
     yum:
       name: libselinux-python
@@ -19,6 +16,3 @@
   - name: SELINUX disabled
     selinux:
       state: disabled
-
-- include: dbserver.yml
-

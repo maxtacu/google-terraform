@@ -1,6 +1,6 @@
 ---
 
-- hosts: dbserver
+- hosts: tag_dbserver
   sudo: yes
   roles:
   - mysql
@@ -14,3 +14,5 @@
   - name: SELINUX disabled
     selinux:
       state: disabled
+
+- include: web.yml

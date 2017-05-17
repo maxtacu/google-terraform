@@ -28,12 +28,12 @@ resource "google_compute_forwarding_rule" "default" {
 }
 
 resource "google_compute_instance" "www" {
-  count = 1
+  count = 2
 
   name = "tf-www-${count.index}"
   machine_type = "f1-micro"
   zone = "${var.region_zone}"
-  tags = ["www-node"]
+  tags = ["webserver"]
 
   disk {
     image = "centos-7"
@@ -77,6 +77,34 @@ resource "google_compute_instance" "www" {
 //        "sudo ${var.install_script_dest_path} ${count.index}",
 //      ]
 //    }
+//  provisioner "local-exec" {
+//    command = "sleep 10 && echo \"[webserver]\n${google_compute_instance.www.network_interface.0.access_config.0.assigned_nat_ip} ansible_connection=ssh ansible_ssh_user=mtacu\" > ./ansible/inventory_dir/inventory"
+//  }
+}
+
+resource "google_compute_instance" "data" {
+  count = 1
+
+  name = "tf-db-${count.index}"
+  machine_type = "f1-micro"
+  zone = "${var.region_zone}"
+  tags = ["dbserver"]
+
+  disk {
+    image = "centos-7"
+  }
+
+  network_interface {
+    network = "default"
+
+    access_config {
+      # Ephemeral
+    }
+  }
+
+  metadata {
+    ssh-keys = "${var.ssh_user}:${file("${var.public_key_path}")}"
+  }
 }
 
   resource "google_compute_firewall" "default" {
@@ -93,6 +121,6 @@ resource "google_compute_instance" "www" {
       ports = ["22"]
     }
 
-    source_ranges = ["195.22.241.18/32"]
-    target_tags = ["www-node"]
+    source_ranges = ["109.185.171.246/32"]
+    target_tags = ["webserver"]
   }

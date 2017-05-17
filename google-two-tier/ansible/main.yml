@@ -1,8 +1,0 @@
----
-
-wp_version: 4.7
-wp_install_dir: /var/www/html/
-wp_db_name: wordpress
-wp_db_user: wpuser
-wp_db_password: wordpresspass
-wp_db_host: 192.168.33.30
