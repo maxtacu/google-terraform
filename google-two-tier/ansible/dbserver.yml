@@ -5,26 +5,6 @@
   roles:
   - mysql
   tasks:
-  - name: restart mysqld
-    service:
-      name: mysqld
-      enabled: yes
-      state: restarted
-
-  - name: Add IPTABLES rules
-    iptables:
-      action: insert
-      chain: INPUT
-      ctstate: ESTABLISHED,RELATED
-      jump: ACCEPT
-
-  - name: Open 3306 port
-    iptables:
-      action: insert
-      chain: INPUT
-      destination_port: 3306
-      protocol: tcp
-      jump: ACCEPT
 
   - name: SELINUX python
     yum:

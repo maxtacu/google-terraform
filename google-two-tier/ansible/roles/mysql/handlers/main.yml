@@ -1,3 +1,21 @@
 ---
 - name: restart mysql
-  service: "name={{ mysql_daemon }} state=restarted sleep=5"
+  service:
+    name: "{{ mysql_daemon }}"
+    state: restarted
+    sleep: 5
+
+- name: open established connections
+  iptables:
+    action: insert
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+
+- name: open 3306 port
+  iptables:
+    action: insert
+    chain: INPUT
+    destination_port: 3306
+    protocol: tcp
+    jump: ACCEPT

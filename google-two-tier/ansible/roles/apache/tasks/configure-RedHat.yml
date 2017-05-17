@@ -21,4 +21,6 @@
     group: root
     mode: 0644
   notify: restart apache
+  notify: open established connections
+  notify: open 80 port
   when: apache_create_vhosts

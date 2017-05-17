@@ -9,24 +9,12 @@
 #  vars_files:
 #    - darthwade.wordpress-apache/vars/main.yml
   tasks:
-  - iptables:
-      action: insert
-      chain: INPUT
-      ctstate: ESTABLISHED,RELATED
-      jump: ACCEPT
-
-  - name: Open 80 port
-    iptables:
-      action: insert
-      chain: INPUT
-      destination_port: 80
-      protocol: tcp
-      jump: ACCEPT
 
   - name: SELINUX python
     yum:
       name: libselinux-python
       state: present
+    notify: restart apache
 
   - name: SELINUX disabled
     selinux:

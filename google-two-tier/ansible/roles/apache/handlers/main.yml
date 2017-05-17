@@ -3,3 +3,18 @@
   service:
     name: "{{ apache_service }}"
     state: "{{ apache_restart_state }}"
+
+- name: open established connections
+  iptables:
+    action: insert
+    chain: INPUT
+    ctstate: ESTABLISHED,RELATED
+    jump: ACCEPT
+
+- name: open 80 port
+  iptables:
+    action: insert
+    chain: INPUT
+    destination_port: 80
+    protocol: tcp
+    jump: ACCEPT
