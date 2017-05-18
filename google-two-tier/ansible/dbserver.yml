@@ -14,5 +14,3 @@
   - name: SELINUX disabled
     selinux:
       state: disabled
-
-- include: web.yml

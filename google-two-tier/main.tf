@@ -87,11 +87,6 @@ resource "google_compute_instance" "data" {
       ports = ["80"]
     }
 
-    allow {
-      protocol = "tcp"
-      ports = ["22"]
-    }
-
-    source_ranges = ["109.185.171.246/32"]
+    source_ranges = ["0.0.0.0/0"]
     target_tags = ["webserver"]
   }
