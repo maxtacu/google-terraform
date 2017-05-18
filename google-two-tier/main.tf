@@ -33,7 +33,8 @@ resource "google_compute_instance" "www" {
   name = "tf-www-${count.index}"
   machine_type = "f1-micro"
   zone = "${var.region_zone}"
-  tags = ["webserver"]
+  tags = [
+    "webserver"]
 
   disk {
     image = "centos-7"
@@ -42,44 +43,14 @@ resource "google_compute_instance" "www" {
   network_interface {
     network = "default"
 
-        access_config {
-          # Ephemeral
-        }
+    access_config {
+      # Ephemeral
+    }
   }
 
   metadata {
     ssh-keys = "${var.ssh_user}:${file("${var.public_key_path}")}"
   }
-
-//  provisioner "file" {
-//    source = "${var.install_script_src_path}"
-//    destination = "${var.install_script_dest_path}"
-//
-//    connection {
-//      type = "ssh"
-//      user = "mtacu"
-//      private_key = "${file("${var.private_key_path}")}"
-//      agent = false
-//    }
-//  }
-//
-//
-//    provisioner "remote-exec" {
-//      connection {
-//        type        = "ssh"
-//        user        = "mtacu"
-//        private_key = "${file("${var.private_key_path}")}"
-//        agent       = false
-//      }
-//
-//      inline = [
-//        "chmod +x ${var.install_script_dest_path}",
-//        "sudo ${var.install_script_dest_path} ${count.index}",
-//      ]
-//    }
-//  provisioner "local-exec" {
-//    command = "sleep 10 && echo \"[webserver]\n${google_compute_instance.www.network_interface.0.access_config.0.assigned_nat_ip} ansible_connection=ssh ansible_ssh_user=mtacu\" > ./ansible/inventory_dir/inventory"
-//  }
 }
 
 resource "google_compute_instance" "data" {
