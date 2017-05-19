@@ -6,7 +6,7 @@ wp_install_dir: '/var/www/html'
 wp_db_name: 'wordpress'
 wp_db_user: 'wpuser'
 wp_db_password: 'wordpresspass'
-wp_db_host: '10.132.0.4'
+wp_db_host: "{{groups['database'].0}}"
 wp_db_charset: 'utf8'
 wp_db_collate: ''
 wp_table_prefix: 'wp_'

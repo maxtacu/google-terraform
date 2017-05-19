@@ -1,5 +1,19 @@
 ---
 
+- hosts: tag_dbserver
+  sudo: yes
+  gather_facts: True
+  tasks:
+  - name: Setting DB-IP address variable
+    set_fact:
+      dbsrvr: "{{ ansible_eth0.ipv4.address }}"
+  - add_host:
+      hostname: '{{ dbsrvr }}'
+      groups: database
+  - name: Print DB-IP adddress
+    debug: var=dbsrvr
+
+
 - hosts: tag_webserver
   become: yes
   roles:
@@ -7,12 +21,14 @@
   - php
   - wordpress-apache
   tasks:
-  - name: SELINUX python
-    yum:
-      name: libselinux-python
-      state: present
-    notify: restart apache
-
-  - name: SELINUX disabled
-    selinux:
-      state: disabled
+  - name: Print DB-IP adddress
+    debug: var=wp_db_host
+#  - name: SELINUX python
+#    yum:
+#      name: libselinux-python
+#      state: present
+#    notify: restart apache
+#
+#  - name: SELINUX disabled
+#    selinux:
+#      state: disabled

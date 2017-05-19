@@ -31,7 +31,7 @@ resource "google_compute_instance" "www" {
   count = 2
 
   name = "tf-www-${count.index}"
-  machine_type = "f1-micro"
+  machine_type = "g1-small"
   zone = "${var.region_zone}"
   tags = [
     "webserver"]
@@ -57,7 +57,7 @@ resource "google_compute_instance" "data" {
   count = 1
 
   name = "tf-db-${count.index}"
-  machine_type = "f1-micro"
+  machine_type = "g1-small"
   zone = "${var.region_zone}"
   tags = ["dbserver"]
 
