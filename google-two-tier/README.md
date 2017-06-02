@@ -26,10 +26,6 @@ After you run `terraform apply` on this configuration, it will
 automatically output the public IP address of the load balancer.
 After your instance registers, the LB should respond with a simple header:
 
-```html
-<h1>Welcome to instance 0</h1>
-```
-
 The index may differ once you increase `count` of `google_compute_instance`
 (i.e. provision more instances).
 
