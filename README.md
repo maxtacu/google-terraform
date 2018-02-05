@@ -22,6 +22,8 @@ Then [download your credentials from Google Cloud Console](https://www.terraform
 
 Optionally update `variables.tf` to specify a default value for the `project_name` variable, and check other variables.
 
+You can check configuration which will be deployed before applying any changes via `terraform plan`
+
 After you run `terraform apply` on this configuration, it will
 automatically output the public IP address of the load balancer.
 After your instance registers, the LB should respond with a simple header:
